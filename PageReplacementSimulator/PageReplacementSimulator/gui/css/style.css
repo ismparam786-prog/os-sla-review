@@ -1,0 +1,320 @@
+/* ==========================================================================
+   Page Replacement Simulator — stylesheet
+   Color palette mirrors the Shah & Anchor Kutchhi Engineering College logo
+   (deep navy blue) and the SLA1 GUI wireframe mockup: navy header/title bar,
+   blue accents for LRU, green accents for Optimal, red for fault counters.
+   ========================================================================== */
+
+:root {
+  --navy: #1b2a56;
+  --navy-dark: #121d3d;
+  --blue: #2f6feb;
+  --blue-light: #eaf1ff;
+  --green: #1e9e5c;
+  --green-light: #e7f8ee;
+  --red: #e5484d;
+  --red-light: #fdecec;
+  --gray-bg: #f3f5fa;
+  --card-bg: #ffffff;
+  --border: #e3e7f0;
+  --text-dark: #1f2430;
+  --text-muted: #6b7280;
+  --radius: 10px;
+  --shadow: 0 2px 10px rgba(27, 42, 86, 0.08);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  background: var(--gray-bg);
+  color: var(--text-dark);
+}
+
+/* ---------------- Brand header ---------------- */
+.brand-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+  padding: 10px 24px;
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.brand-logo { height: 48px; }
+
+.brand-nav { display: flex; gap: 8px; }
+
+.nav-pill {
+  text-decoration: none;
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 20px;
+}
+
+.nav-pill.active,
+.nav-pill:hover {
+  background: var(--navy);
+  color: #fff;
+}
+
+.brand-tagline {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* ---------------- Title bar ---------------- */
+.title-bar {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%);
+  color: #fff;
+  padding: 18px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.title-bar-main h1 {
+  margin: 0;
+  font-size: 26px;
+  letter-spacing: 1px;
+}
+
+.title-bar-main p {
+  margin: 4px 0 0;
+  font-size: 12px;
+  letter-spacing: 2px;
+  opacity: 0.85;
+}
+
+.title-bar-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-size: 11px;
+  letter-spacing: 1px;
+  opacity: 0.8;
+  gap: 2px;
+}
+
+/* ---------------- Main grid ---------------- */
+.main-grid {
+  display: grid;
+  grid-template-columns: 300px 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 18px;
+  padding: 20px;
+}
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 16px 18px;
+}
+
+.card h2 {
+  font-size: 15px;
+  margin: 0 0 14px;
+  color: var(--navy);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.card h2 small { font-weight: 400; color: var(--text-muted); font-size: 12px; }
+
+.input-card { grid-row: span 1; }
+
+/* ---------------- Input card ---------------- */
+.input-card label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin: 12px 0 4px;
+}
+
+.input-card input[type="text"],
+.input-card input[type="number"] {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+.hint { cursor: help; color: var(--blue); }
+
+.algo-toggle {
+  display: flex;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.algo-btn {
+  flex: 1;
+  padding: 8px 4px;
+  border: 1px solid var(--border);
+  background: #fff;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  color: var(--text-muted);
+}
+
+.algo-btn.active {
+  background: var(--blue);
+  color: #fff;
+  border-color: var(--blue);
+}
+
+.run-btn {
+  width: 100%;
+  margin-top: 16px;
+  padding: 10px;
+  background: var(--green);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.run-btn:hover { background: #167c48; }
+
+.error-box {
+  margin-top: 10px;
+  background: var(--red-light);
+  color: var(--red);
+  border: 1px solid var(--red);
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 12px;
+}
+
+/* ---------------- Flow diagram ---------------- */
+.flow-diagram { margin-top: 20px; }
+.flow-diagram h3 {
+  font-size: 12px;
+  color: var(--navy);
+  margin-bottom: 8px;
+}
+.flow-chain { display: flex; flex-direction: column; align-items: center; }
+.flow-node {
+  background: var(--blue-light);
+  border: 1px solid var(--blue);
+  color: var(--navy);
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 11px;
+  text-align: center;
+  width: 100%;
+}
+.flow-node small { color: var(--text-muted); }
+.flow-node.diamond { background: #fff7e0; border-color: #e0a800; }
+.flow-node.small { width: auto; padding: 5px 8px; }
+.flow-node.hit { background: var(--green-light); border-color: var(--green); }
+.flow-node.fault { background: var(--red-light); border-color: var(--red); }
+.flow-arrow { font-size: 12px; color: var(--text-muted); margin: 2px 0; }
+.flow-branch { display: flex; gap: 14px; margin: 4px 0; }
+.flow-branch-item { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.branch-label { font-size: 10px; font-weight: 700; }
+.branch-label.yes { color: var(--green); }
+.branch-label.no { color: var(--red); }
+.flow-tagline {
+  margin-top: 14px;
+  font-size: 11px;
+  font-style: italic;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+/* ---------------- Result cards (LRU / Optimal) ---------------- */
+.lru-icon { color: var(--blue); }
+.opt-icon { color: var(--green); }
+
+.table-wrap { max-height: 360px; overflow-y: auto; border: 1px solid var(--border); border-radius: 6px; }
+
+table { width: 100%; border-collapse: collapse; font-size: 12px; }
+thead th {
+  position: sticky; top: 0;
+  background: var(--navy);
+  color: #fff;
+  padding: 7px 4px;
+  text-align: center;
+}
+tbody td {
+  padding: 5px 4px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+}
+tbody tr:nth-child(even) { background: #fafbfd; }
+td.status-fault { color: var(--red); font-weight: 700; }
+td.status-hit { color: var(--green); font-weight: 700; }
+
+.stat-row { display: flex; gap: 10px; margin-top: 14px; }
+.stat-box {
+  flex: 1;
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+}
+.fault-box { background: var(--red-light); border: 1px solid var(--red); }
+.hit-box { background: var(--green-light); border: 1px solid var(--green); }
+.stat-label { display: block; font-size: 10px; color: var(--text-muted); margin-bottom: 4px; }
+.fault-box .stat-value { color: var(--red); font-size: 22px; font-weight: 800; }
+.hit-box .stat-value { color: var(--green); font-size: 22px; font-weight: 800; }
+
+/* ---------------- Bottom comparison row ---------------- */
+.compare-card, .chart-card, .insight-card { font-size: 12px; }
+.compare-card h3, .chart-card h3, .insight-card h3 {
+  margin: 0 0 12px; font-size: 13px; color: var(--navy);
+}
+
+.compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.compare-item {
+  background: var(--gray-bg);
+  border-radius: 6px;
+  padding: 8px;
+  text-align: center;
+}
+.compare-item small { color: var(--text-muted); display: block; font-size: 10px; }
+.compare-item strong { font-size: 18px; color: var(--navy); }
+
+.bar-chart { display: flex; align-items: flex-end; gap: 24px; height: 140px; padding-top: 10px; }
+.bar-group { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; flex: 1; }
+.bar { width: 42px; border-radius: 4px 4px 0 0; display: flex; align-items: flex-start; justify-content: center; transition: height 0.4s ease; }
+.lru-bar { background: var(--blue); }
+.opt-bar { background: var(--green); }
+.bar-value { color: #fff; font-size: 11px; font-weight: 700; margin-top: 2px; }
+.bar-axis-label { margin-top: 6px; font-size: 11px; color: var(--text-muted); font-weight: 600; }
+
+.insight-card p { color: var(--text-dark); line-height: 1.5; }
+
+/* ---------------- Footer ---------------- */
+.brand-footer {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 12px 24px;
+  background: var(--navy);
+  color: #cfd6ea;
+  font-size: 11px;
+}
+
+/* ---------------- Responsive ---------------- */
+@media (max-width: 1000px) {
+  .main-grid { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Page Replacement Simulator</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ============ TOP BRAND HEADER ============ -->
+  <header class="brand-header">
+    <div class="brand-left">
+      <img src="assets/logo.png" alt="Shah & Anchor Kutchhi Engineering College" class="brand-logo" />
+    </div>
+    <nav class="brand-nav">
+      <a href="#" class="nav-pill active">Home</a>
+      <a href="#" class="nav-pill">Simulation</a>
+      <a href="#" class="nav-pill">Comparison</a>
+      <a href="#" class="nav-pill">About</a>
+    </nav>
+    <div class="brand-tagline">Innovate&nbsp;|&nbsp;Learn&nbsp;|&nbsp;Build a Smarter Tomorrow</div>
+  </header>
+
+  <!-- ============ TITLE BAR ============ -->
+  <section class="title-bar">
+    <div class="title-bar-main">
+      <h1>PAGE REPLACEMENT SIMULATOR</h1>
+      <p>VIRTUAL MEMORY MANAGEMENT&nbsp;&nbsp;|&nbsp;&nbsp;LRU &amp; OPTIMAL ALGORITHM</p>
+    </div>
+    <div class="title-bar-meta">
+      <span>OPERATING SYSTEMS</span>
+      <span>Self Learning Activity</span>
+      <span>Param & Jainam</span>
+    </div>
+  </section>
+
+  <!-- ============ MAIN GRID ============ -->
+  <main class="main-grid">
+
+    <!-- ---------- LEFT: SIMULATION INPUT ---------- -->
+    <section class="card input-card">
+      <h2><span class="icon">⚙</span> Simulation Input</h2>
+
+      <label for="refString">Reference String <span class="hint" title="Comma or space separated page numbers">ⓘ</span></label>
+      <input type="text" id="refString" value="7, 0, 1, 2, 0, 3, 0, 4, 2, 3, 0, 3, 2, 1, 2, 0, 1, 7, 0, 1" />
+
+      <label for="frameCount">Number of Frames</label>
+      <input type="number" id="frameCount" min="1" max="50" value="3" />
+
+      <label>Select Algorithm</label>
+      <div class="algo-toggle">
+        <button type="button" class="algo-btn active" data-algo="lru">LRU</button>
+        <button type="button" class="algo-btn" data-algo="optimal">OPTIMAL</button>
+        <button type="button" class="algo-btn" data-algo="both">BOTH</button>
+      </div>
+
+      <button id="runBtn" class="run-btn">▶ Run Simulation</button>
+      <p id="errorBox" class="error-box" hidden></p>
+
+      <div class="flow-diagram">
+        <h3>Memory Management Flow</h3>
+        <div class="flow-chain">
+          <div class="flow-node">CPU<br /><small>(Process)</small></div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-node">Page Reference</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-node diamond">Page Hit?</div>
+          <div class="flow-branch">
+            <div class="flow-branch-item">
+              <span class="branch-label yes">Yes</span>
+              <div class="flow-node small hit">Hit<br /><small>(increment hit counter)</small></div>
+            </div>
+            <div class="flow-branch-item">
+              <span class="branch-label no">No</span>
+              <div class="flow-node small fault">Page Fault<br /><small>(select page to replace)</small></div>
+            </div>
+          </div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-node">Replacement Algorithm<br /><small>(LRU / Optimal)</small></div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-node">Updated Frames<br /><small>(Main Memory)</small></div>
+        </div>
+        <p class="flow-tagline">"Efficient memory management builds a smarter tomorrow."</p>
+      </div>
+    </section>
+
+    <!-- ---------- MIDDLE: LRU RESULTS ---------- -->
+    <section class="card result-card" id="lruCard">
+      <h2><span class="icon lru-icon">🕒</span> LRU <small>(Least Recently Used)</small></h2>
+      <div class="table-wrap">
+        <table id="lruTable">
+          <thead><tr><th>Ref.</th><th>F1</th><th>F2</th><th>F3</th><th>Status</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="stat-row">
+        <div class="stat-box fault-box">
+          <span class="stat-label">⚠ Total Page Faults</span>
+          <span class="stat-value" id="lruFaults">—</span>
+        </div>
+        <div class="stat-box hit-box">
+          <span class="stat-label">📊 Hit Ratio</span>
+          <span class="stat-value" id="lruHitRatio">—</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- RIGHT: OPTIMAL RESULTS ---------- -->
+    <section class="card result-card" id="optCard">
+      <h2><span class="icon opt-icon">🎯</span> Optimal </h2>
+      <div class="table-wrap">
+        <table id="optTable">
+          <thead><tr><th>Ref.</th><th>F1</th><th>F2</th><th>F3</th><th>Status</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="stat-row">
+        <div class="stat-box fault-box">
+          <span class="stat-label">⚠ Total Page Faults</span>
+          <span class="stat-value" id="optFaults">—</span>
+        </div>
+        <div class="stat-box hit-box">
+          <span class="stat-label">📊 Hit Ratio</span>
+          <span class="stat-value" id="optHitRatio">—</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- BOTTOM ROW: COMPARISON CARDS ---------- -->
+    <section class="card compare-card">
+      <h3>📈 Performance Comparison</h3>
+      <div class="compare-grid">
+        <div class="compare-item"><small>LRU<br/>Page Faults</small><strong id="cmpLruFaults">—</strong></div>
+        <div class="compare-item"><small>Optimal<br/>Page Faults</small><strong id="cmpOptFaults">—</strong></div>
+        <div class="compare-item"><small>LRU<br/>Hit Ratio</small><strong id="cmpLruHit">—</strong></div>
+        <div class="compare-item"><small>Optimal<br/>Hit Ratio</small><strong id="cmpOptHit">—</strong></div>
+      </div>
+    </section>
+
+    <section class="card chart-card">
+      <h3>📊 Page Fault Comparison</h3>
+      <div class="bar-chart" id="faultChart">
+        <div class="bar-group">
+          <div class="bar lru-bar" id="faultBarLru"><span class="bar-value" id="faultBarLruVal"></span></div>
+          <div class="bar-axis-label">LRU</div>
+        </div>
+        <div class="bar-group">
+          <div class="bar opt-bar" id="faultBarOpt"><span class="bar-value" id="faultBarOptVal"></span></div>
+          <div class="bar-axis-label">Optimal</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card chart-card">
+      <h3>📉 Hit Ratio Comparison</h3>
+      <div class="bar-chart" id="hitChart">
+        <div class="bar-group">
+          <div class="bar lru-bar" id="hitBarLru"><span class="bar-value" id="hitBarLruVal"></span></div>
+          <div class="bar-axis-label">LRU</div>
+        </div>
+        <div class="bar-group">
+          <div class="bar opt-bar" id="hitBarOpt"><span class="bar-value" id="hitBarOptVal"></span></div>
+          <div class="bar-axis-label">Optimal</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card insight-card">
+      <h3>💡 Key Insight</h3>
+      <p id="insightText">Run a simulation to see how LRU compares with the Optimal benchmark for this reference string.</p>
+    </section>
+
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="brand-footer">
+    <span>Operating Systems&nbsp;|&nbsp;SLA Review 2&nbsp;|&nbsp;SYCM2 – Computer Engineering</span>
+    <span>Shah &amp; Anchor Kutchhi Engineering College</span>
+    <span>Learn&nbsp;|&nbsp;Simulate&nbsp;|&nbsp;Optimize</span>
+  </footer>
+
+  <script src="js/validator.js"></script>
+  <script src="js/algorithms.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
